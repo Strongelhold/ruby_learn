@@ -1,0 +1,12 @@
+require 'bundler/setup'
+Bundler.require
+require 'rake/testtask'
+
+namespase :db do
+  desc 'Auto-migrate the database (destroys data)'
+  task :migrate do
+    puts 'Yohoho'
+    DataMapper.finalize
+    DataMapper.auto_migrate!
+  end
+end

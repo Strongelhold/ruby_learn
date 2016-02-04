@@ -1,0 +1,42 @@
+require 'rubygems'
+require 'data_mapper'
+require 'sinatra'
+require 'dm-migrations'
+require 'dm-timestamps'
+
+DataMapper.setup(:default, 'sqlite:///home/strongelhold/rails_projects/ruby_learn/rl.db')
+
+get '/' do
+  "Hello, World!" 
+end
+
+get '/home' do
+  @R = Res.all
+  erb :show 
+end
+
+class Res
+  include DataMapper::Resource
+
+  property :id,          Serial
+  property :name,        String
+  property :website,     String
+  property :description, String
+  property :created_at,  DateTime
+  property :updated_at,  DateTime
+end
+
+DataMapper.finalize
+DataMapper.auto_migrate!
+DataMapper.auto_upgrade!
+Res.auto_migrate!
+
+#@R = Res.all
+@res = Res.new(:name => "Olo22", :website => "weeeeeebsite", :description => "desc")
+@res.save
+@res2 = Res.create(:name => "Aga", :website => "weeeeeeby", :description => "olo")
+@res3 = Res.create(:name => "Aga2", :website => "weeeeeeby2", :description => "olo2")
+# @res3.save
+#@res = Res.new(:name => "Abdula", :website => "Web", :description => "descript")
+#@res.save
+#Res.all.save
