@@ -1,0 +1,13 @@
+/.bundler
+/db/*.db
+
+*.swm
+*.swo
+*.swp
+*.un
+*.un~
+*.rb~
+.gitignore~
+.Gemfile~
+*.*~
+

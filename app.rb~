@@ -4,7 +4,7 @@ require 'sinatra'
 require 'dm-migrations'
 require 'dm-timestamps'
 
-DataMapper.setup(:default, 'sqlite:///home/strongelhold/rails_projects/ruby_learn/rl.db')
+DataMapper.setup(:default, 'sqlite:db/database.db')
 
 get '/' do
   "Hello, World!" 
@@ -19,7 +19,6 @@ end
 require_relative 'models/source.rb'
 
 DataMapper.finalize
-#DataMapper.auto_migrate!
 DataMapper.auto_upgrade!
 
 #@R = Res.all
