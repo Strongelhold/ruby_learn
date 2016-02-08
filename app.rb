@@ -3,6 +3,11 @@ require 'data_mapper'
 require 'sinatra'
 require 'dm-migrations'
 require 'dm-timestamps'
+require 'sinatra/partial'
+require 'carrierwave'
+require 'carrierwave/datamapper'
+
+set :root, File.join(File.dirname(__FILE__))
 
 DataMapper.setup(:default, 'sqlite:db/database.db')
 
@@ -12,19 +17,37 @@ end
 
 get '/home' do
   @R = Source.all
-  erb :show 
+  output = ""
+  output << partial(:show) 
+end
+get '/upload' do
+  haml :upload
+end
+post '/upload' do
+  s = Source.new
+  s.name = params[:name]
+  s.website = params[:website]
+  s.description = params[:description]
+  s.created_at = Time.now
+  s.updated_at = Time.now
+  s.image = params[:image]
+  if s.save
+    redirect '/home'
+  else
+    redirect '/upload'
+  end
 end
 
 # Model classes
 require_relative 'models/source.rb'
 
 DataMapper.finalize
+#DataMapper.auto_migrate!   #need to reset db
 DataMapper.auto_upgrade!
 
 #@R = Res.all
-#@res = Source.new(:name => "Olo22", :website => "weeeeeebsite", :description => "desc")
-#@res.save
-#@res2 = Res.create(:name => "Aga", :website => "weeeeeeby", :description => "olo")
+#@res = Source.create(:name => "Olo22", :website => "www.google.com", :description => "desc")
+#@res2 = Source.create(:name => "Aga", :website => "weeeeeeby", :description => "olo")
 #@res3 = Res.create(:name => "Aga2", :website => "weeeeeeby2", :description => "olo2")
 # @res3.save
 #@res = Res.new(:name => "Abdula", :website => "Web", :description => "descript")

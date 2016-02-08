@@ -1,5 +1,6 @@
 /.bundler
 /db/*.db
+/public/images
 
 *.swm
 *.swo

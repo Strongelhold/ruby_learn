@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'data_mapper'
+gem 'dm-migrations'
+gem 'dm-timestamps'
+gem 'dm-sqlite-adapter'
+gem 'rmagick'
+gem 'mini_magick'
+gem 'carrierwave-datamapper', :require => 'carrierwave/datamapper'
+gem 'sinatra-partial'
+gem 'shotgun'
+gem 'haml'
