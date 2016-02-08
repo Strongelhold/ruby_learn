@@ -1,4 +1,5 @@
+%link(rel="stylesheet" href="css/style.css")
 - if flash[:notice]
-  %p{style: "color: green;"}= flash[:notice]
+  %p.notice= flash[:notice]
 - if flash[:error]
-  %p{style: "color: red;"}= flash[:error]
+  %p.error= flash[:error]
