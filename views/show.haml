@@ -1,7 +1,9 @@
 !!! 5
-- @R.each do |f|
+- @sources.each do |f|
   %p= f.name 
-  %p= f.website
+  %p
+    %a{:href => 'http://' + f.website}>
+      %p= f.website
   %p= f.description
   %img{ src: f.image.medium.url}
   %p= "-----------------------"

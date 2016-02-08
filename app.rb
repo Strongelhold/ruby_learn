@@ -6,6 +6,11 @@ require 'dm-timestamps'
 require 'sinatra/partial'
 require 'carrierwave'
 require 'carrierwave/datamapper'
+require 'rack-flash'
+require 'sinatra/redirect_with_flash'
+
+enable :sessions
+use Rack::Flash#, :sweep => true
 
 set :root, File.join(File.dirname(__FILE__))
 
@@ -13,15 +18,21 @@ DataMapper.setup(:default, 'sqlite:db/database.db')
 
 get '/' do
  "Hello, World!"
+ if Source.any?
+   flash.now[:notice] = 'Sources are existing!'
+ end
 end
 
 get '/home' do
-  @R = Source.all
+  @sources = Source.all
   output = ""
+  output << partial(:_messages)
   output << partial(:show) 
 end
 get '/new' do
-  haml :new
+  output = ""
+  output << partial(:_messages)
+  output << partial(:new)
 end
 post '/new' do
   s = Source.new
@@ -32,9 +43,9 @@ post '/new' do
   s.updated_at = Time.now
   s.image = params[:image]
   if s.save
-    redirect '/home'
+    redirect '/home', notice: 'Created successfuly'
   else
-    redirect '/new'
+    redirect '/new', error: 'Something wrong...'
   end
 end
 
@@ -45,11 +56,3 @@ DataMapper.finalize
 #DataMapper.auto_migrate!   #need to reset db
 DataMapper.auto_upgrade!
 
-#@R = Res.all
-#@res = Source.create(:name => "Olo22", :website => "www.google.com", :description => "desc")
-#@res2 = Source.create(:name => "Aga", :website => "weeeeeeby", :description => "olo")
-#@res3 = Res.create(:name => "Aga2", :website => "weeeeeeby2", :description => "olo2")
-# @res3.save
-#@res = Res.new(:name => "Abdula", :website => "Web", :description => "descript")
-#@res.save
-#Res.all.save

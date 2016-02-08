@@ -1,8 +1,8 @@
 %h1 New resource
 
 %form{:action=> '/new', :method=>"post", :enctype=>"multipart/form-data"}
-  %input{:type=>"text", :name=>"name", :placeholder=>"Name of source"}
-  %input{:type=>"text", :name=>"website", :placeholder=>"Website address"}
-  %input{:type=>"textarea", :name=>"description", :placeholder=>"Description of the source"}
-  %input{:type=>"file", :name=>"image"}
+  %input{:type=>"text", :name=>"name", :placeholder=>"Name of source"} <br/>
+  %input{:type=>"text", :name=>"website", :placeholder=>"Website address"} <br/>
+  %textarea{:name=>"description", :placeholder=>"Description of the source"}
+  %input{:type=>"file", :name=>"image"} <br/>
   %input{:type=>"submit", :value=>"Upload"}
