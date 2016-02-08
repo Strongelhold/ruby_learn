@@ -6,7 +6,7 @@ class Source
 
   property :id, Serial
   property :name, String
-  property :website, String
+  property :website, String, format: /^[a-z]*\.(([a-z]{2,3}$)|([a-z]{2,3}\.[a-z]{2,3}))/
   property :description, String
   property :created_at, DateTime
   property :updated_at, DateTime

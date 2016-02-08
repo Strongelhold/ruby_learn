@@ -9,7 +9,7 @@
 *.un~
 *.rb~
 .gitignore~
-.Gemfile~
+Gemfile~
 *.*~
 .*.*.swp
 .*.*.*~

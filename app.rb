@@ -12,7 +12,7 @@ set :root, File.join(File.dirname(__FILE__))
 DataMapper.setup(:default, 'sqlite:db/database.db')
 
 get '/' do
-  "Hello, World!" 
+ "Hello, World!"
 end
 
 get '/home' do
@@ -20,13 +20,13 @@ get '/home' do
   output = ""
   output << partial(:show) 
 end
-get '/upload' do
-  haml :upload
+get '/new' do
+  haml :new
 end
-post '/upload' do
+post '/new' do
   s = Source.new
   s.name = params[:name]
-  s.website = params[:website]
+  s.website = params[:website].downcase
   s.description = params[:description]
   s.created_at = Time.now
   s.updated_at = Time.now
@@ -34,7 +34,7 @@ post '/upload' do
   if s.save
     redirect '/home'
   else
-    redirect '/upload'
+    redirect '/new'
   end
 end
 
