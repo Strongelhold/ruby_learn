@@ -1,9 +1,6 @@
-!!! 5
-- @sources.each do |f|
-  %p= f.name 
-  %p
-    %a{:href => 'http://' + f.website}>
-      %p= f.website
-  %p= f.description
-  %img{ src: f.image.medium.url}
-  %p= "-----------------------"
+%p= @source.name
+%p
+  %a{ :href=> 'http://' + @source.website }
+    %p= @source.website
+%p= @source.description
+%img{ src: @source.image, alt: "image" }

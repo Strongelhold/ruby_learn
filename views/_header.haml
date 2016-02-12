@@ -1,0 +1,11 @@
+!!! 5
+%link(rel="stylesheet" href="css/bootstrap/css/bootstrap.css")
+  %nav.navbar.navbar-inverse.navbar-fixed-top
+    %div.container
+      %div.navbar-header
+        %button.navbar-toggle.collapsed{ "data-toggle" => "colapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar" }
+        %a.navbar-brand{href: "#"}= "Learn Ruby"
+      %div.collapse.navbar-collapse#navbar
+        %ul.nav.navbar-nav
+          %li
+            %a{ href: "/" }= "Home"

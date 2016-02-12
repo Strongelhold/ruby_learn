@@ -10,30 +10,33 @@ require 'rack-flash'
 require 'sinatra/redirect_with_flash'
 
 enable :sessions
-use Rack::Flash#, :sweep => true
+use Rack::Flash, :sweep => true
 
 set :root, File.join(File.dirname(__FILE__))
 
 DataMapper.setup(:default, 'sqlite:db/database.db')
 
 get '/' do
- "Hello, World!"
- if Source.any?
-   flash.now[:notice] = 'Sources are existing!'
- end
+  @sources = Source.all
+  output = ""
+  output << partial(:_header)
+  output << partial(:_messages)
+  output << partial(:index)
 end
 
-get '/home' do
-  @sources = Source.all
+get '/show/:id' do
+  @source = Source.get(params['id'])
   output = ""
   output << partial(:_messages)
   output << partial(:show) 
 end
+
 get '/new' do
   output = ""
   output << partial(:_messages)
   output << partial(:new)
 end
+
 post '/new' do
   s = Source.new
   s.name = params[:name]
