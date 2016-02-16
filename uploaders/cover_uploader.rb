@@ -10,6 +10,9 @@ class CoverUploader < CarrierWave::Uploader::Base
   version :medium do
     process :resize_to_fit => [200, 200]
   end
+  version :large do
+    process :resize_to_fit => [300, 300]
+  end
 
   def extension_white_list
     %w(jpg jpeg bmp png gif)

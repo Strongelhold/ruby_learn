@@ -27,12 +27,14 @@ end
 get '/show/:id' do
   @source = Source.get(params['id'])
   output = ""
+  output << partial(:_header)
   output << partial(:_messages)
   output << partial(:show) 
 end
 
 get '/new' do
   output = ""
+  output << partial(:_header)
   output << partial(:_messages)
   output << partial(:new)
 end
@@ -50,6 +52,10 @@ post '/new' do
   else
     redirect '/new', error: 'Something wrong...'
   end
+end
+
+get %r{.*/css/style.css} do
+  redirect('css/style.css')
 end
 
 # Model classes

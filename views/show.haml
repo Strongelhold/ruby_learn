@@ -1,6 +1,8 @@
-%p= @source.name
-%p
-  %a{ :href=> 'http://' + @source.website }
-    %p= @source.website
-%p= @source.description
-%img{ src: @source.image, alt: "image" }
+!!! 5
+%body
+  %p= @source.name
+  %p
+    %a{ :href=> 'http://' + @source.website }
+      %p= @source.website
+  %p= @source.description
+  %img{ src: @source.image, alt: "image" }

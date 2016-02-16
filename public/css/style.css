@@ -1,20 +1,56 @@
-@import bootstrap;
+@import 'bootstrap/css/bootstrap.css';
+
 /*Flash messages */
 .notice { color: green; }
 .error { color: red; }
 
-/* Header 
+body {
+  padding-top: 70px;
+}
+div.content {
+  display: block;
+  max-height: 200px;
+  min-height: 200px;
+  height: auto;
+}
+
+div.content.inner {
+  display: block;
+  min-height: 100px;
+  min-width: 100px;
+  max-height: 200px;
+}
+
+ul.content {
+  list-style: none;
+  padding-bottom: 20px;  
+  box-sizing: border-box;
+}
+div.content.image {
+  float: left;
+  width: 200px;
+  max-height: 200px;
+  margin-right: 20px;
+}
+div.starter-template {
+  width: 60%;
+  margin: auto;
+}
+
+/* Header
+nav.header {
+  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 50px;
+}
 ul.header {
   color: black;
   float: left;
 }
 div.header {
-  background-color: black;
-  position: fixed;
-  width: 100%;
-  height: 50px;
-  right: 0;
-  left: 0;
-  top: 0;
 }
 */
