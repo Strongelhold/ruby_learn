@@ -1,16 +1,20 @@
 require 'rubygems'
 require 'data_mapper'
 require 'sinatra'
+require 'dm-core'
 require 'dm-migrations'
 require 'dm-timestamps'
+require 'digest/sha1'
 require 'sinatra/partial'
 require 'carrierwave'
 require 'carrierwave/datamapper'
 require 'rack-flash'
 require 'sinatra/redirect_with_flash'
+require 'sinatra-authentication'
 
 enable :sessions
 use Rack::Flash, :sweep => true
+use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on a11 yr st34ksssss'
 
 set :root, File.join(File.dirname(__FILE__))
 
@@ -54,12 +58,19 @@ post '/new' do
   end
 end
 
+get '/signup' do
+  output = ""
+  output << partial(:_header)
+  output << partial(:signup)
+end
+
 get %r{.*/css/style.css} do
   redirect('css/style.css')
 end
 
 # Model classes
 require_relative 'models/source.rb'
+require_relative 'models/user.rb'
 
 DataMapper.finalize
 #DataMapper.auto_migrate!   #need to reset db
