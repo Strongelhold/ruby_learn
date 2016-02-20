@@ -1,4 +1,4 @@
-class User
+class DmUser
   include DataMapper::Resource
   include BCrypt
 
@@ -7,13 +7,5 @@ class User
   property :password, BCryptHash
   property :created_at, DateTime
   property :updated_at, DateTime
-
-  def authenticate(attempted_password)
-    if self.password == attempted_password
-      true
-    else
-      false
-    end
-  end
 
 end

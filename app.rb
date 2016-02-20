@@ -10,45 +10,17 @@ require 'carrierwave/datamapper'
 require 'rack-flash'
 require 'sinatra/redirect_with_flash'
 require 'bcrypt'
-require 'warden'
+require 'digest/sha1'
+require 'sinatra-authentication'
 
 enable :sessions
 use Rack::Flash, :sweep => true
 use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on a11 yr st34ksssss'
 
 set :root, File.join(File.dirname(__FILE__))
+set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + "views/user"
 
 DataMapper.setup(:default, 'sqlite:db/database.db')
-
-use Warden::Manager do |config|
-  config.serialize_into_session{ |user| user.id }
-  config.serialize_from_session{ |id| User.get(id) }
-  config.scope_defaults :default,
-    strategies: [:password],
-    action: 'auth/unauthenticated'
-  config.failure_app = self
-end
-
-Warden::Manager.before_failure do |env, ops|
-  env['REQUEST_METHOD'] = 'POST'
-end
-
-Warden::Strategies.add(:password) do
-  def valid?
-    params['user']['email'] && params['user']['password']
-  end
-  def authenticate!
-    user = User.first(email: params['user']['email'])
-  
-    if user.nil?
-      throw(:warden, message: "We don't know about this email.")
-    elsif user.authenticate(params['user']['password'])
-      success!(user)
-    else
-      throw(:warden, message: "The email and password combination ")
-    end
-  end
-end
 
 get '/' do
   @sources = Source.all
@@ -88,39 +60,29 @@ post '/new' do
   end
 end
 
-get '/auth/login' do
+get '/login' do
   output = ""
   output << partial(:_header)
+  output << partial(:_messages)
   output << partial(:login)
-end
-
-post '/auth/login' do
-  env['warden'].authenticate!
-
-  flash[:notice] = "Successfule logged in"
-  if session[:return_to].nil?
-    redirect '/'
-  else
-    redirect session[:return_to]
-  end
 end
 
 get '/signup' do
   output = ""
   output << partial(:_header)
+  output << partial(:_messages)
   output << partial(:signup)
-  @user = User.new
-  @user.email = params[:email]
-  @user.password = params[:password_digest]
 end
 
 get %r{.*/css/style.css} do
   redirect('css/style.css')
 end
 
+require_relative 'helpers/app_helper.rb'
+
 # Model classes
 require_relative 'models/source.rb'
-require_relative 'models/user.rb'
+#require_relative 'models/user.rb'
 
 DataMapper.finalize
 #DataMapper.auto_migrate!   #need to reset db
