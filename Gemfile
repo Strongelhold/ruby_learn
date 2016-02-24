@@ -14,4 +14,4 @@ gem 'haml'
 gem 'rack-flash3'
 gem 'sinatra-redirect-with-flash'
 gem 'bcrypt'
-gem 'sinatra-authentication'
+

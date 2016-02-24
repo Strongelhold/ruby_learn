@@ -1,0 +1,14 @@
+!!! 5
+%body
+  %form(action="/login" method="post")
+    %div
+      %label(for="email")Email:
+      %input#email(type="text" name="email")
+    %div
+      %label(for="password")Password:
+      %input#password(type="password" name="password")
+    %div
+      %input(type="submit" value="Login")
+      %input(type="reset" value="Clear")
+    %p
+      %a{:href => "/signup"} Signup

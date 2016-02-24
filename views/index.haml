@@ -1,6 +1,10 @@
 !!! 5
 %body
   %div.container
+    -if session[:email].nil?
+    -else
+      %p= @user.email
+  %div.container
     %div.starter-template
       - @sources.each do |f|
         %div.content

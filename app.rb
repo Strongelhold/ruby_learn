@@ -10,20 +10,17 @@ require 'carrierwave/datamapper'
 require 'rack-flash'
 require 'sinatra/redirect_with_flash'
 require 'bcrypt'
-require 'digest/sha1'
-require 'sinatra-authentication'
 
 enable :sessions
 use Rack::Flash, :sweep => true
-use Rack::Session::Cookie, :secret => 'A1 sauce 1s so good you should use 1t on a11 yr st34ksssss'
 
 set :root, File.join(File.dirname(__FILE__))
-set :sinatra_authentication_view_path, Pathname(__FILE__).dirname.expand_path + "views/user"
 
 DataMapper.setup(:default, 'sqlite:db/database.db')
 
 get '/' do
   @sources = Source.all
+  @user = User.first(email: session[:email])
   output = ""
   output << partial(:_header)
   output << partial(:_messages)
@@ -46,17 +43,40 @@ get '/new' do
 end
 
 post '/new' do
-  s = Source.new
-  s.name = params[:name]
-  s.website = params[:website].downcase
-  s.description = params[:description]
-  s.created_at = Time.now
-  s.updated_at = Time.now
-  s.image = params[:image]
-  if s.save
-    redirect '/home', notice: 'Created successfuly'
+  source = Source.new
+  source.name = params[:name]
+  source.website = params[:website].downcase
+  source.description = params[:description]
+  source.created_at = Time.now
+  source.updated_at = Time.now
+  source.image = params[:image]
+  if source.save
+    redirect '/', notice: 'Created successfuly'
   else
     redirect '/new', error: 'Something wrong...'
+  end
+end
+
+get '/signup' do
+  output = ""
+  output << partial(:_header)
+  output << partial(:_messages)
+  output << partial(:signup)
+end
+
+post '/signup' do
+  password_salt = BCrypt::Engine.generate_salt
+  password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
+
+  user = User.new
+  user.email = params['email'].downcase
+  user.salt = password_salt
+  user.password = password_hash
+  if user.save
+    session[:email] = params[:email]
+    redirect '/', notice: "Signup successfuly!"
+  else
+    redirect '/signup', error: "Something wrong..."
   end
 end
 
@@ -67,11 +87,24 @@ get '/login' do
   output << partial(:login)
 end
 
-get '/signup' do
-  output = ""
-  output << partial(:_header)
-  output << partial(:_messages)
-  output << partial(:signup)
+post '/login' do
+  user = User.first(email: params[:email])
+
+  if user.nil?
+    redirect '/login', error: "We don't know about this email"
+  else
+    if user.password.to_s == BCrypt::Engine.hash_secret(params[:password], user.salt).to_s
+      session[:email] = params[:email]
+      redirect '/', notice: "Logged in successfuly"
+    else
+      redirect '/login', error: "Password not correct"
+    end
+  end
+end
+
+get '/logout' do
+  session[:email] = nil
+  redirect '/', notice: "Exit was successfull"
 end
 
 get %r{.*/css/style.css} do
@@ -82,7 +115,7 @@ require_relative 'helpers/app_helper.rb'
 
 # Model classes
 require_relative 'models/source.rb'
-#require_relative 'models/user.rb'
+require_relative 'models/user.rb'
 
 DataMapper.finalize
 #DataMapper.auto_migrate!   #need to reset db
