@@ -58,10 +58,14 @@ post '/new' do
 end
 
 get '/signup' do
-  output = ""
-  output << partial(:_header)
-  output << partial(:_messages)
-  output << partial(:signup)
+  if login?
+    redirect '/'
+  else
+    output = ""
+    output << partial(:_header)
+    output << partial(:_messages)
+    output << partial(:signup)
+  end
 end
 
 post '/signup' do
@@ -81,10 +85,14 @@ post '/signup' do
 end
 
 get '/login' do
-  output = ""
-  output << partial(:_header)
-  output << partial(:_messages)
-  output << partial(:login)
+  if login?
+    redirect '/'
+  else
+    output = ""
+    output << partial(:_header)
+    output << partial(:_messages)
+    output << partial(:login)
+  end
 end
 
 post '/login' do
@@ -111,7 +119,8 @@ get %r{.*/css/style.css} do
   redirect('css/style.css')
 end
 
-require_relative 'helpers/app_helper.rb'
+#Helpers
+require_relative 'helpers/user_helper.rb'
 
 # Model classes
 require_relative 'models/source.rb'

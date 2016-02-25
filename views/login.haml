@@ -1,14 +1,18 @@
 !!! 5
 %body
-  %form(action="/login" method="post")
-    %div
-      %label(for="email")Email:
-      %input#email(type="text" name="email")
-    %div
-      %label(for="password")Password:
-      %input#password(type="password" name="password")
-    %div
-      %input(type="submit" value="Login")
-      %input(type="reset" value="Clear")
-    %p
-      %a{:href => "/signup"} Signup
+  %div.container
+    %div.starter-template
+      %form.auth(action="/login" method="post")
+        %div.input-group
+          %span.input-group-addon#basic-addon1(for="email" style="width: 50%;")Email:
+          %input.form-control(type="text" name="email" aria-describedby="basic-addon1")
+        %div.input-group
+          %span.input-group-addon#basic-addon1(for="password" style="width: 50%;")Password:
+          %input.form-control(type="password" name="password" aria-describedby="basic-addon1")
+        %div.input-group
+          %input.btn.btn-primary.btn-block(type="submit" value="Login")
+        %div.input-group
+          %p
+            %a{:href => "/signup"} Signup 
+            ="for more features"
+

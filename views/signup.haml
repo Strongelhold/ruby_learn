@@ -1,15 +1,19 @@
 %body
-  %p Enter the email and password!
-  %form(action="/signup" method="post")
-    %div
-      %label(for="email")Email:
-      %input#email(type="text" name="email")
-    %div
-      %label(for="password")Password:
-      %input#password(type="password" name="password")
-    %div
-      %label(for="checkpassword")Password confirmation:
-      %input#password(type="password" name="checkpassword")
-    %div
-      %input(type="submit" value="Sign Up")
-      %input(type="reset" value="Clear")
+  %div.container
+    %div.starter-template
+      %form.auth(action="/signup" method="post")
+        %div.input-group
+          %span.input-group-addon#basic-addon1(for="email" style="width: 50%;")Email:
+          %input.form-control(type="text" name="email" aria-describedby="basic-addon1")
+        %div.input-group
+          %span.input-group-addon#basic-addon1(for="password" style="width: 50%;")Password:
+          %input.form-control(type="password" name="password" aria-describedby="basic-addon1")
+        %div.input-group
+          %span.input-group-addon#basic-addon1(for="checkpassword" style="width: 50%;")Password confirmation:
+          %input.form-control(type="password" name="checkpassword" aria-describedby="basic-addon1")
+        %div.input-group
+          %input.btn.btn-primary.btn-block(type="submit" value="Sign Up")
+        %div.input-group
+          %p
+            = "Have account? "
+            %a{ :href => '/login' } Login
