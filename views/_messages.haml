@@ -1,5 +1,7 @@
-%link(rel="stylesheet" href="css/style.css")
-- if flash[:notice]
-  %p.notice= flash[:notice]
-- if flash[:error]
-  %p.error= flash[:error]
+%div.container
+  %div.starter-template
+    %link(rel="stylesheet" href="css/style.css")
+    - if flash[:notice]
+      %p.notice= flash[:notice]
+    - if flash[:error]
+      %p.error= flash[:error]

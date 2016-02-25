@@ -9,4 +9,6 @@ class User
   property :created_at, DateTime
   property :updated_at, DateTime
 
+  validates_presence_of :email
+
 end

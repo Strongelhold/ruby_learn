@@ -70,7 +70,12 @@ end
 
 post '/signup' do
   password_salt = BCrypt::Engine.generate_salt
-  password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
+  if params[:password].size < 5
+    flash[:error] = "Password to short"
+    redirect '/signup'
+  else
+    password_hash = BCrypt::Engine.hash_secret(params[:password], password_salt)
+  end
 
   user = User.new
   user.email = params['email'].downcase
