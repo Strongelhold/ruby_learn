@@ -3,7 +3,7 @@ class User
   include BCrypt
 
   property :id,         Serial, :key => true
-  property :email,      String
+  property :email,      String, :format => /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/
   property :password,   BCryptHash
   property :salt,       String
   property :created_at, DateTime
