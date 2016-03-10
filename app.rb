@@ -47,10 +47,9 @@ post '/new' do
   source.name = params[:name]
   source.website = params[:website].downcase
   source.description = params[:description]
-  source.created_at = Time.now
-  source.updated_at = Time.now
   source.image = params[:image]
   if source.save
+    source.tag_parser(params[:tags].to_s)
     redirect '/', notice: 'Created successfuly'
   else
     redirect '/new', error: 'Something wrong...'
@@ -115,6 +114,34 @@ post '/login' do
   end
 end
 
+get '/subscription' do
+  if login?
+    output = ""
+    output << partial(:_header)
+    output << partial(:_messages)
+    output << partial(:subscription)
+  else
+    redirect '/'
+  end
+end
+
+post '/subscription' do
+  if login?
+    user = User.first(session[:email])
+    tags = params[:tags].to_s.split(',')
+    tags.each do |tag|
+      user.tags << TagHelper.exist_or_create(tag)
+    end
+    if user.save
+      redirect '/', notice: "Successufuly saved!"
+    else
+      redirect '/subscription', error: "Something wrong..."
+    end
+  else
+    redirect '/'
+  end
+end
+
 get '/logout' do
   session[:email] = nil
   redirect '/', notice: "Exit was successfull"
@@ -126,10 +153,12 @@ end
 
 #Helpers
 require_relative 'helpers/user_helper.rb'
+require_relative 'helpers/tag_helper.rb'
 
 # Model classes
 require_relative 'models/source.rb'
 require_relative 'models/user.rb'
+require_relative 'models/tag.rb'
 
 DataMapper.finalize
 #DataMapper.auto_migrate!   #need to reset db

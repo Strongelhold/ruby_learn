@@ -9,6 +9,8 @@ class User
   property :created_at, DateTime
   property :updated_at, DateTime
 
+  has n, :tags, :through => Resource
+
   validates_presence_of :email
 
 end

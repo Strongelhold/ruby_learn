@@ -1,0 +1,11 @@
+!!! 5
+%body
+  %div.container
+    %div.startet-template
+      %form.auth{ action: '/subscription', method: 'post', enctype: 'multipart/form-data' }
+        %div.input-group
+          %span.input-group-addon#basic-addin1(for = "tags" style = "width: 22%;") Your tags
+          %input.form-control(type = "text" name = "tags" placeholder = "tags separated by commas" aria-describedby = "basic-addon1")
+        %div.input-group
+          %input.btn.btn-primary.btn-block(type = "submit" value = "Save")
+

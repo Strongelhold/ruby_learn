@@ -11,4 +11,14 @@ class Source
   property :updated_at, DateTime
   property :image, String, :auto_validation => false
   mount_uploader :image, CoverUploader
+
+  has n, :tags, :through => Resource
+
+  def tag_parser(tags)
+    tags_array = tags.split(',')
+    tags_array.each do |tag|
+      self.tags << TagHelper.exist_or_create(tag)
+    end
+    self.save
+  end
 end

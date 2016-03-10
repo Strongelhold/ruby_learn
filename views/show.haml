@@ -5,4 +5,8 @@
     %a{ :href=> 'http://' + @source.website }
       %p= @source.website
   %p= @source.description
+  -if @source.tags.nil?
+  -else
+    - @source.tags.each do |tag|
+      %p= tag.name
   %img{ src: @source.image, alt: "image" }

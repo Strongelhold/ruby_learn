@@ -1,8 +1,18 @@
-%h1 New resource
-
-%form{:action=> '/new', :method=>"post", :enctype=>"multipart/form-data"}
-  %input{:type=>"text", :name=>"name", :placeholder=>"Name of source"} <br/>
-  %input{:type=>"text", :name=>"website", :placeholder=>"Website address"} <br/>
-  %textarea{:name=>"description", :placeholder=>"Description of the source"}
-  %input{:type=>"file", :name=>"image"} <br/>
-  %input{:type=>"submit", :value=>"Upload"}
+%body
+  %div.container
+    %div.starter-template
+      %form.auth{:action=> '/new', :method=>"post", :enctype=>"multipart/form-data"}
+        %div.input-group
+          %span.input-group-addon#basic_addon1(for = "name" style = "width: 22%;") Name
+          %input.form-control(type = "text" name = "name" placeholder = "Name of source" aria-discribedby = "basic-addon1")
+        %div.input-group
+          %span.input-group-addon#basic_addon1(for = "website" style = "width: 22%;") Website
+          %input.form-control(type = "text" name = "website" placeholder = "Website address" aria-describedby = "basic-addon1")
+        %div.input-group
+          %span.input-group-addon#basic-addin1(for = "tags" style = "width: 22%") Tags
+          %input.form-control(type = "text" name = "tags" placeholder = "Tags separated by commas" aria-decribedby = "basic-addon1")
+        %div.input-group
+          %textarea.form-control(name = "description" placeholder = "Description of the source" rows = "3")
+        %div.input-group
+          %input.btn.btn-primary.btn-block(type = "file" name = "image")
+          %input.btn.btn-primary.btn-block(type = "submit" value = "Upload")

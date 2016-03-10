@@ -6,10 +6,6 @@ module UserHelper
       true
     end
   end
-
-  def current_user
-    return User.first(session[:email])
-  end
 end
 
 helpers UserHelper
