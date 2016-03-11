@@ -1,0 +1,19 @@
+!!! 5
+%body
+  %div.container
+    %div.starter-template
+      %a{ :href => '/'} Click 
+      = "if you want to see all resources"
+      - @sources.each do |source|
+        - if @user.tags == source.tags
+          %div.content
+            %div.content.image
+              %img{ src: source.image.medium.url }
+            %div.content
+              %ul.content
+                %li
+                  %h2= source.name
+                %li
+                  %a{ :href => 'http://' + source.website }
+                    %p.lead= source.website
+                  %li= source.description

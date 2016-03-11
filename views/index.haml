@@ -2,15 +2,15 @@
 %body
   %div.container
     %div.starter-template
-      - @sources.each do |f|
+      - @sources.each do |source|
         %div.content
           %div.content.image
-            %img{ src: f.image.medium.url }
+            %img{ src: source.image.medium.url }
           %div.content
             %ul.content
               %li
-                %h2= f.name 
+                %h2= source.name 
               %li
-                %a{:href => 'http://' + f.website}>
-                  %p.lead= f.website
-              %li= f.description
+                %a{ :href => 'http://' + source.website }
+                  %p.lead= source.website
+              %li= source.description

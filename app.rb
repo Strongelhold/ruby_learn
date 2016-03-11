@@ -27,6 +27,21 @@ get '/' do
   output << partial(:index)
 end
 
+get '/subs' do
+  @user = User.first(email: session[:email])
+  if login?
+    if @user.tags.empty?
+      redirect '/subscription', error: "You must add tags"
+    else
+      @sources = Source.all
+      output = ""
+      output << partial(:_header)
+      output << partial(:_messages)
+      output << partial(:user_index)
+    end
+  end
+end
+
 get '/show/:id' do
   @source = Source.get(params['id'])
   output = ""
@@ -127,13 +142,13 @@ end
 
 post '/subscription' do
   if login?
-    user = User.first(session[:email])
+    user = User.first(email: session[:email])
     tags = params[:tags].to_s.split(',')
     tags.each do |tag|
       user.tags << TagHelper.exist_or_create(tag)
     end
     if user.save
-      redirect '/', notice: "Successufuly saved!"
+      redirect '/subs', notice: "Successufuly saved!"
     else
       redirect '/subscription', error: "Something wrong..."
     end

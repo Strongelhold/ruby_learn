@@ -1,5 +1,7 @@
 !!! 5
 %link(rel="stylesheet" href="css/style.css")
+%script{ :type => "text/javascript", :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" }
+%script{ :type => "text/javascript", :src => "css/bootstrap/js/bootstrap.js" }
 %title="Learn Ruby"
 %nav.navbar.navbar-inverse.navbar-fixed-top
   %div.container
@@ -7,13 +9,21 @@
       %button.navbar-toggle.collapsed{ "data-toggle" => "colapse", "data-target" => "#navbar", "aria-expanded" => "false", "aria-controls" => "navbar" }
       %a.navbar-brand{href: "/"}= "Learn Ruby"
     %div.collapse.navbar-collapse#navbar
-      %ul.nav.navbar-nav
-        %li
-          %a{ href: "/" }= "Home"
-      %ul.nav.navbar-nav.navbar-right
-        -if login?
+      - if login?
+        %ul.nav.navbar-nav
           %li
-            %a{ href: "/logout"}= "Logout"
+            %a{ href: "/subs" }= "Your subs"
+      %ul.nav.navbar-nav.navbar-right.dropdown
+        -if login?
+          %button.btn.btn-link.dropdown-toggle#dropdownMenu1{  "data-toggle" => "dropdown", "aria-haspopup" => "true", "aria-expanded" => "true"}
+            = "Profile"
+            %span.caret
+          %ul.dropdown-menu{ "aria-labelledby" => "dropdownMenu1" }
+            %li
+              %a{ href: "/subscription" }= "Add tags"
+            %li.divider{ role: "separator" }
+            %li
+              %a{ href: "/logout"}= "Logout"
         -else
           %li
             %a{ href: "/signup" }= "Signup"
