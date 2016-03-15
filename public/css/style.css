@@ -50,6 +50,11 @@ form.auth {
   margin-bottom: auto;
 }
 
+li.tags {
+  margin-top: 20px;
+  color: grey;
+}
+
 /* Header
 nav.header {
   background-color: black;

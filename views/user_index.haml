@@ -17,3 +17,6 @@
                   %a{ :href => 'http://' + source.website }
                     %p.lead= source.website
                   %li= source.description
+                  %li.tags
+                    - source.tags.each do |tag|
+                      = tag.name.to_s
